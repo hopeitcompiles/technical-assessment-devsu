@@ -2,6 +2,13 @@
 
 # dependencies
 node_modules/
+yarn.lock
+
+# coverage
+/coverage
+*.lcov
+*.clover
+*.html
 
 # Expo
 .expo/
@@ -33,3 +40,6 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+#test snapshots
+*/**/__snapshots__

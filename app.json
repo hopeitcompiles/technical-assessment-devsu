@@ -18,10 +18,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.devsu.assessment"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/Roboto-Regular.ttf"]
+        }
+      ]
+    ]
   }
 }

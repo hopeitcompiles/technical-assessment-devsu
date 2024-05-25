@@ -1,0 +1,26 @@
+[
+  {
+    "id": "test2",
+    "name": "Product example",
+    "date_release": "2025-03-15T00:00:00.000Z",
+    "date_revision": "2024-09-20T00:00:00.000Z",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "logo": "https://example.com/logo.png"
+  },
+  {
+    "id": "test3",
+    "name": "Sample product",
+    "date_release": "2026-08-10T00:00:00.000Z",
+    "date_revision": "2025-12-03T00:00:00.000Z",
+    "description": "Aenean ullamcorper velit eu lectus congue, sit amet facilisis sapien dapibus.",
+    "logo": "https://example.com/sample_logo.jpg"
+  },
+  {
+    "id": "test4",
+    "name": "Demo Product",
+    "date_release": "2024-05-29T00:00:00.000Z",
+    "date_revision": "2023-11-15T00:00:00.000Z",
+    "description": "Vivamus tristique libero ac malesuada luctus.",
+    "logo": "https://example.com/demo_logo.png"
+  }
+]
