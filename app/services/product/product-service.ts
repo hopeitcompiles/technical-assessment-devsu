@@ -21,7 +21,7 @@ export class ProductService {
       .then((e) => e.data);
   }
 
-  async create(product: Product) {
+  async create(product: UpdateProductInput) {
     return api_service.post(`${this.endpoint}`, product).then((e) => e.data);
   }
 

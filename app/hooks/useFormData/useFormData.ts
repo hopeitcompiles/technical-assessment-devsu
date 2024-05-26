@@ -9,7 +9,7 @@ type KeysToOptional<T> = {
   [K in keyof T]?: T[K] | string;
 };
 type KeysToBoolType<T> = {
-  [K in keyof T]?: T[K] | boolean;
+  [K in keyof T]?: boolean;
 };
 
 type FormDataProps<T> = {

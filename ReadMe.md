@@ -14,7 +14,7 @@ A search for financial products through a text field is required. The layout sho
 
 A list of the obtained records is required to be displayed. The layout should be done based on design D1.
 
-# F4. Add product:
+# F4. Add product: ✅
 
 The implementation of an "Add" button is required to navigate to the registration form. The form must allow the creation of a product using an "Add" button and must allow the form to be cleared using a "Reset" button. The layout of the base form should be done according to design D2 and the location of the main button according to design D3.
 
@@ -28,7 +28,7 @@ Logo Required
 Release Date Required, the date must be equal to or greater than the current date
 Review Date Required, the date must be exactly one year after the release date
 
-# F5. Edit product:
+# F5. Edit product: ✅
 
 A button is required that, when clicked, allows the product to be edited. Upon clicking, it should navigate to the product edit screen and should keep the ID field disabled. The edit form must maintain the same validations as in F4 and show errors for each field. The layout of the edit form should be done according to design D2.
 
@@ -38,24 +38,54 @@ A button is required that, when clicked, displays a modal with a "Cancel" button
 
 ## How to run the project and run the tests
 
-* Instal dependencies
-    #with npm
-    ```bash
-    npm install
-    ```
-    ```bash
-    yarn install
-    ```
-* Run tests
-    #with npm
-    ```bash
-    npm run test
-    ```
-    ```bash
-    yarn test
-    ```
-    
-* Run project on Android
-    ```bash
-    npx expo run:android
-    ```
+### Installing dependencies
+
+#with npm
+
+```bash
+npm install
+```
+
+```bash
+yarn install
+```
+
+### Running the tests
+
+#with npm
+
+```bash
+npm run test
+```
+
+```bash
+yarn test
+```
+
+### Running app in android
+
+- With Xxpo Go
+
+```bash
+npx expo start
+```
+
+- Natively - ! Java 11 and android sdk, JAVA_HOME and ANDROID_HOME variables are needed
+
+```bash
+npx expo run:android
+```
+
+### Running app in ios
+
+- With Xxpo Go
+
+```bash
+npx expo start
+```
+
+- Natively
+
+```bash
+npx expo run:ios
+```

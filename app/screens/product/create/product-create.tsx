@@ -7,7 +7,7 @@ import {
   Text,
   TextInput,
 } from "../../../../custom-export";
-import { Product } from "../../../interfaces/Product";
+import { Product, UpdateProductInput } from "../../../interfaces/Product";
 import { dateFormat } from "../../../utils/date-convertions";
 import useFormData from "../../../hooks/useFormData/useFormData";
 import { PRODUCT_YUP_SCHEMA } from "./validation/yup-product";
@@ -47,9 +47,25 @@ export default function ProductCreateScreen() {
     onSubmit: submitForm,
   });
 
+  function buildObjectToSend(
+    values: Product,
+    modified?: { [k in keyof Product]?: boolean }
+  ) {
+    if (!modified) {
+      return values;
+    }
+    const filteredKeyValues: UpdateProductInput = { id: values.id };
+    Object.keys(modified).forEach((key) => {
+      const _key = key as keyof Product;
+      filteredKeyValues[_key] = values[_key] as any;
+    });
+    return filteredKeyValues;
+  }
+
   async function submitForm(values: Product) {
     try {
       setIsLoading(true);
+
       const date_release = dateFormat.getDateOrNull(values.date_release);
       if (!date_release) {
         throw new CustomError("Fecha de iiberación no válida");
@@ -58,22 +74,28 @@ export default function ProductCreateScreen() {
       if (!date_revision) {
         throw new CustomError("Fecha de revisión no válida");
       }
-      const inputValues = { ...values, date_release, date_revision };
 
-      if (!product) {
+      const isEditing = !product;
+      const inputValues = buildObjectToSend(
+        { ...values, date_release, date_revision },
+        isEditing ? modified : undefined
+      );
+
+      if (isEditing) {
         const doesExist = await product_service.verifyIfExists(values.id);
         if (doesExist) {
           throw new BusinessError(BusinessErrorCodes.PRODUCT_ALREADY_EXIST);
         }
         await product_service.create(inputValues);
       } else {
-        await product_service.update(values);
+        await product_service.update(inputValues);
       }
       const serialized = {
         ...values,
-        date_release: values.date_release.toString(),
-        date_revision: values.date_revision.toString(),
+        date_release: date_release.toString(),
+        date_revision: date_revision.toString(),
       };
+
       Alert.alert(
         `Producto ${product ? "actualizado" : "creado"}`,
         undefined,
