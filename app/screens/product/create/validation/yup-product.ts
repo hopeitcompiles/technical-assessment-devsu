@@ -1,11 +1,18 @@
 import * as Yup from "yup";
 import { ERROR_MESSAGES } from "../../../../constants/messages";
 
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
 const parseDateString = (value: string, originalValue: string) => {
+  //accepts "/" and "-" as separators for the date
   const dateFormat =
-    /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/(19|20)\d\d$/;
+    /^(0?[1-9]|[12][0-9]|3[01])[-\/](0?[1-9]|1[012])[-\/](19|20)\d\d$/;
   if (typeof originalValue === "string" && dateFormat.test(originalValue)) {
-    const [day, month, year] = originalValue.split("/").map(Number);
+    const dateParts = originalValue.includes("/")
+      ? originalValue.split("/")
+      : originalValue.split("-");
+    const [day, month, year] = dateParts.map(Number);
     return new Date(year, month - 1, day);
   }
   return new Date(value);
@@ -28,7 +35,7 @@ export const PRODUCT_YUP_SCHEMA = Yup.object().shape({
   date_release: Yup.date()
     .typeError("Fecha de liberación no válida")
     .transform(parseDateString)
-    .min(new Date(), "Debe ser igual o mayor a la fecha actual")
+    .min(today, "Debe ser igual o mayor a la fecha actual")
     .required(ERROR_MESSAGES.REQUERIED_FIELD),
   date_revision: Yup.date()
     .typeError("Fecha de revisión no válida")
@@ -38,7 +45,6 @@ export const PRODUCT_YUP_SCHEMA = Yup.object().shape({
       function (value) {
         const { date_release } = this.parent;
         if (!date_release || !value) return false;
-
         const startDateYear = new Date(date_release).getFullYear();
         const endDateYear = new Date(value).getFullYear();
 

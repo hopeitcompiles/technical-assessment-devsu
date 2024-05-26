@@ -9,7 +9,12 @@ import {
   Text,
   TextInput,
 } from "../../../../custom-export";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { Product } from "../../../interfaces/Product";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ProductStackParamList } from "../../../navigation/product-navigator";

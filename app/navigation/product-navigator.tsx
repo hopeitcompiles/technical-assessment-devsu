@@ -7,8 +7,8 @@ import { Product } from "../interfaces/Product";
 import ProductCreate from "../screens/product/create/product-create";
 
 export type ProductStackParamList = {
-  ProductHome: { update: Key };
-  ProductDetail: { product: Product };
+  ProductHome: { update?: Key } | undefined;
+  ProductDetail: { product: Product; shouldUpdateOnBack?: boolean };
   ProductCreate: { product: Product } | undefined;
 };
 

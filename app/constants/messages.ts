@@ -12,5 +12,7 @@ export const COMMON_MESSAGES = {
   DELETE_BUTTON: "Eliminar",
   EDIT_BUTTON: "Editar",
   CONFIRM_BUTTON: "Confirmar",
+  SEND_BUTTON: "Enviar",
+  RESTART_BUTTON: "Reiniciar",
   SEARCH_PLACEHOLDER: "Buscar...",
 };

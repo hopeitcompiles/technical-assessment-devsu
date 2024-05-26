@@ -1,16 +1,16 @@
 ### REQUIREMTNS LIST
 
-# F1. List of financial products:
+# F1. List of financial products: ✅
 
 An application is required to visualize the different financial products offered by the Bank Institution loaded from an API. The layout should be done based on design D1.
 
 When selecting an item, all the information of that item will be displayed in another view.
 
-# F2. Search for financial products:
+# F2. Search for financial products: ✅
 
 A search for financial products through a text field is required. The layout should be done based on design D1.
 
-# F3. Number of records:
+# F3. Number of records: ✅
 
 A list of the obtained records is required to be displayed. The layout should be done based on design D1.
 
@@ -32,6 +32,13 @@ Review Date Required, the date must be exactly one year after the release date
 
 A button is required that, when clicked, allows the product to be edited. Upon clicking, it should navigate to the product edit screen and should keep the ID field disabled. The edit form must maintain the same validations as in F4 and show errors for each field. The layout of the edit form should be done according to design D2.
 
-# F6. Delete product:
+# F6. Delete product: ✅
 
 A button is required that, when clicked, displays a modal with a "Cancel" button and a "Delete" button. Clicking "Delete" should proceed with the deletion; in case of cancellation, it should only hide the modal. The layout of the modal should be done according to design D4.
+
+## How to run the project
+
+- Instal dependencies
+  ```bash
+
+  ```

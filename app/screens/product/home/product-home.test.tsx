@@ -3,7 +3,7 @@ import { ProductStackParamList } from "../../../navigation/product-navigator";
 import useProducts from "../../../hooks/useProducts/useProducts";
 import mockedProducts from "../../../../__mocks__/data/products.json";
 import { Product } from "../../../interfaces/Product";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import ProductHomeScreen from "./product-home";
 import {
   render,

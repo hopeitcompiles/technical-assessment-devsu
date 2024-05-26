@@ -1,18 +1,32 @@
-function getDateOrNull(date: string) {
-  if (!isValidDate) {
+function getDateOrNull(date: string | Date) {
+  if (date instanceof Date) {
+    return date;
+  }
+  if (date.length > 10) {
+    const verifiedDate = new Date(date);
+    if (!isNaN(verifiedDate.getTime())) {
+      return verifiedDate;
+    }
+  }
+
+  try {
+    const separator = date.includes("/") ? "/" : "-";
+    const [day, month, year] = date.split(separator).map(Number);
+
+    const convertedDate = new Date(year, month - 1, day);
+
+    if (
+      convertedDate.getFullYear() === year &&
+      convertedDate.getMonth() === month - 1 &&
+      convertedDate.getDate() === day
+    ) {
+      return convertedDate;
+    } else {
+      throw new Error("Invalid date");
+    }
+  } catch (e) {
     return null;
   }
-  const splitedDate = date.replaceAll("/", "-").split("-");
-  console.log(splitedDate);
-  if (splitedDate.length !== 3) {
-    return null;
-  }
-  const _date = new Date(splitedDate.join("-"));
-  if (isNaN(_date.getTime())) {
-    return null;
-  }
-  console.log(_date);
-  return _date;
 }
 
 function isValidDate(date: Date | string | undefined) {

@@ -20,15 +20,6 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.devsu.assessment"
-    },
-
-    "plugins": [
-      [
-        "expo-font",
-        {
-          "fonts": ["./assets/fonts/Roboto-Regular.ttf"]
-        }
-      ]
-    ]
+    }
   }
 }

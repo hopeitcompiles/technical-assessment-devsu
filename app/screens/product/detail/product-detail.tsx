@@ -1,11 +1,17 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import React, { useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  BackHandler,
+  NativeEventSubscription,
+  StyleSheet,
+  View,
+} from "react-native";
 import { ProductStackParamList } from "../../../navigation/product-navigator";
 import {
   Button,
   ButtonGroup,
   Container,
+  Image,
   Split,
   Text,
 } from "../../../../custom-export";
@@ -17,14 +23,17 @@ import { COMMON_MESSAGES } from "../../../constants/messages";
 
 export default function ProductDetailScreen() {
   const route = useRoute<RouteProp<ProductStackParamList, "ProductDetail">>();
-  const navigate =
+  const navigation =
     useNavigation<NativeStackNavigationProp<ProductStackParamList>>();
   const product = route.params?.product;
   const [toDelete, setToDelete] = useState<{ name: string; id: string }>();
+  const backListenerRef = useRef<NativeEventSubscription>();
+  const blurListenerRef = useRef<() => void>();
+  const focusListenerRef = useRef<() => void>();
 
   function handlePressEdit() {
     if (product) {
-      navigate.navigate("ProductCreate", { product });
+      navigation.navigate("ProductCreate", { product });
     }
   }
 
@@ -33,6 +42,36 @@ export default function ProductDetailScreen() {
       setToDelete({ name: product.name, id: product.id });
     }
   }
+
+  const handleBackPress = useCallback(() => {
+    const { shouldUpdateOnBack } = route.params;
+
+    navigation.navigate("ProductHome", {
+      update: shouldUpdateOnBack ? new Date().toLocaleTimeString() : undefined,
+    });
+    backListenerRef.current?.remove();
+    return true;
+  }, [route.params.shouldUpdateOnBack]);
+
+  useEffect(() => {
+    blurListenerRef.current = navigation.addListener("blur", () => {
+      backListenerRef.current?.remove();
+    });
+
+    focusListenerRef.current = navigation.addListener("focus", () => {
+      backListenerRef.current = BackHandler.addEventListener(
+        "hardwareBackPress",
+        handleBackPress
+      );
+
+      return () => backListenerRef.current?.remove();
+    });
+
+    return () => {
+      blurListenerRef.current && blurListenerRef.current();
+      focusListenerRef.current && focusListenerRef.current();
+    };
+  }, [navigation, handleBackPress]);
 
   if (!product) {
     return (

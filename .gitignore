@@ -42,4 +42,9 @@ yarn-error.*
 *.tsbuildinfo
 
 #test snapshots
-*/**/__snapshots__
+**/**/__snapshots__
+
+#android and ios folders
+# as there's no custom config in those files, android and ios folders are ignored
+./android
+./ios

@@ -8,15 +8,18 @@ type KeysToStringType<T> = {
 type KeysToOptional<T> = {
   [K in keyof T]?: T[K] | string;
 };
+type KeysToBoolType<T> = {
+  [K in keyof T]?: T[K] | boolean;
+};
 
-type FormDataProps = {
+type FormDataProps<T> = {
   schema?: Schema;
   initialValues?: any;
   validateOnChange?: boolean;
-  onSubmit?: (arg: any) => void;
+  onSubmit?: (values: T, updatedKeys?: KeysToBoolType<T>) => void;
 };
 
-export default function useFormData<T>(arg?: FormDataProps) {
+export default function useFormData<T>(arg?: FormDataProps<T>) {
   const {
     initialValues = {},
     schema,
@@ -24,24 +27,41 @@ export default function useFormData<T>(arg?: FormDataProps) {
     onSubmit,
   } = arg || {};
   const [values, setValues] = useState<KeysToOptional<T>>(initialValues);
+  const [modified, setModified] = useState<KeysToBoolType<T>>({});
   const [errors, setErrors] = useState<KeysToStringType<T>>({});
 
   function handleChange<K extends keyof T>(
     key: K | K[],
     value: T[K] | string | (T[K] | string)[]
   ) {
-    const newValues: KeysToOptional<T> = {};
+    const newValues: KeysToOptional<T> = { ...values };
     const _keys = Array.isArray(key) ? key : [key];
     const _values = Array.isArray(value) ? value : [value];
-    _keys.forEach((e, index) => (newValues[e] = _values[index]));
-    setValues({ ...values, ...newValues });
+    const modifiedState = { ...modified };
+
+    _keys.forEach((e, index) => {
+      newValues[e] = _values[index];
+      const initialValue = initialValues[e];
+      if (
+        JSON.stringify(newValues[e]) === JSON.stringify(initialValue) ||
+        newValues[e]?.toString() === initialValue?.toString()
+      ) {
+        delete modifiedState[e];
+      } else {
+        modifiedState[e] = true;
+      }
+    });
+    setModified(modifiedState);
+    setValues(newValues);
     if (schema && validateOnChange) {
       yupValidate(schema, newValues).then((e) => setErrors(e));
     }
   }
 
   function clearFormData() {
+    setErrors({});
     setValues(initialValues);
+    setModified({});
   }
 
   async function handleSubmit() {
@@ -53,7 +73,7 @@ export default function useFormData<T>(arg?: FormDataProps) {
       });
     }
     if (onSubmit && !hasErrors) {
-      onSubmit(values);
+      onSubmit(values as T, modified);
     }
   }
 
@@ -71,6 +91,7 @@ export default function useFormData<T>(arg?: FormDataProps) {
   return {
     values,
     errors,
+    modified,
     handleChange,
     clearFormData,
     submitFormData: handleSubmit,
