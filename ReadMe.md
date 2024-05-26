@@ -36,9 +36,26 @@ A button is required that, when clicked, allows the product to be edited. Upon c
 
 A button is required that, when clicked, displays a modal with a "Cancel" button and a "Delete" button. Clicking "Delete" should proceed with the deletion; in case of cancellation, it should only hide the modal. The layout of the modal should be done according to design D4.
 
-## How to run the project
+## How to run the project and run the tests
 
-- Instal dependencies
-  ```bash
-
-  ```
+* Instal dependencies
+    #with npm
+    ```bash
+    npm install
+    ```
+    ```bash
+    yarn install
+    ```
+* Run tests
+    #with npm
+    ```bash
+    npm run test
+    ```
+    ```bash
+    yarn test
+    ```
+    
+* Run project on Android
+    ```bash
+    npx expo run:android
+    ```
